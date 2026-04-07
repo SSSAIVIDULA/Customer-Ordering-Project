@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocksFlow | Production Order Management System</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <main class="container">
+
+        <!-- NAVBAR -->
+        <nav class="navbar">
+            <h2 onclick="location.reload()" style="cursor:pointer">SocksFlow Production</h2>
+            <div>
+                <a href="#products">Product Catalog</a>
+                <a href="javascript:showTrackSection()">Track Production</a>
+                <a href="#about">About</a>
+                <span id="navCart" style="margin-left:20px; color:var(--primary); font-weight:bold;">
+                    📦 <span id="cartCountNav">0</span>
+                </span>
+            </div>
+        </nav>
+
+        <!-- HERO -->
+        <section class="hero-landing">
+            <div class="hero-content">
+                <h1>Socks Manufacturing Production Manager</h1>
+                <p>Manage your socks production orders with high-efficiency Workforce Analytics.</p>
+                <button onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+                    Explore Product Catalog 🚀
+                </button>
+            </div>
+            <div class="hero-image-container">
+                <img src="hero.png" alt="Socks Production" class="hero-main-img">
+            </div>
+        </section>
+
+        <!-- PRODUCTS -->
+        <section id="products" class="products">
+            <h2>Our Product Catalog</h2>
+
+            <div class="product-grid">
+
+                <div class="product-card" onclick="selectProduct('Basic Socks (Cotton)')">
+                    <img src="basic.png" alt="Basic Socks" />
+                    <h3>Basic Socks (Cotton)</h3>
+                    <p>High-quality cotton socks for daily wear.</p>
+                </div>
+
+                <div class="product-card" onclick="selectProduct('Sports Socks')">
+                    <img src="sports.png" alt="Sports Socks" />
+                    <h3>Sports Socks</h3>
+                    <p>Durable and breathable compression socks for athletes.</p>
+                </div>
+
+                <div class="product-card" onclick="selectProduct('Woolen Socks')">
+                    <img src="woolen.png" alt="Woolen Socks" />
+                    <h3>Woolen Socks</h3>
+                    <p>Warm and comfortable socks for winter seasons.</p>
+                </div>
+
+                <div class="product-card" onclick="selectProduct('Ankle Socks')">
+                    <img src="ankle.png" alt="Ankle Socks" />
+                    <h3>Ankle Socks</h3>
+                    <p>Stylish ankle-length socks for casual outfits.</p>
+                </div>
+
+                <div class="product-card" onclick="selectProduct('Kids Socks Pack')">
+                    <img src="kids.png" alt="Kids Socks" />
+                    <h3>Kids Socks Pack</h3>
+                    <p>Colorful and soft socks designed for children.</p>
+                </div>
+
+                <div class="product-card" onclick="selectProduct('Industrial Grade Socks')">
+                    <img src="https://images.unsplash.com/photo-1616428362489-0f04df60634c?auto=format&fit=crop&w=600&q=80" alt="Industrial Socks" onerror="this.src='basic.png'" />
+                    <h3>Industrial Grade Socks</h3>
+                    <p>Reinforced socks for heavy-duty work environments.</p>
+                </div>
+
+                <div class="product-card" onclick="selectProduct('Premium Silk Blend')">
+                    <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=600&q=80" alt="Silk Socks" onerror="this.src='basic.png'" />
+                    <h3>Premium Silk Blend</h3>
+                    <p>Luxury silk-cotton blend for formal occasions.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PRODUCT TYPE SELECTION -->
+        <section id="dishSelection" class="hidden">
+            <div class="selection-header">
+                <button onclick="backToProducts()" class="btn-back">← Back to Catalog</button>
+                <h2 id="selectedCategoryTitle">Select Socks Variant</h2>
+            </div>
+            <div id="dishGrid" class="dish-grid">
+                <!-- Variants injected by JS -->
+            </div>
+            <div id="checkoutBtn" class="checkout-bar hidden">
+                <div class="cart-info">
+                    <span id="cartCount">0</span> Items in Production List
+                </div>
+                <button onclick="goToCheckout()" class="btn-checkout">Create Production Order 📦</button>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about" class="about">
+            <h2>About Our Production System</h2>
+            <p>
+                Our system uses specialized Workforce Analytics to track textile manufacturing performance,
+                optimize machine dyeing and knitting cycles, and ensure high-quality socks for every retailer.
+            </p>
+        </section>
+
+        <!-- PRODUCTION ORDER FORM -->
+        <section class="order-form-wrapper hidden" id="formSection">
+            <div class="glass-card">
+
+                <div class="form-header">
+                    <h2>Finalize Production Order</h2>
+                    <div class="step-indicator">Step 2 of 2</div>
+                </div>
+
+                <div id="cartSummary" class="cart-summary">
+                    <h3>Production Summary</h3>
+                    <div id="cartItems" class="cart-items-list"></div>
+                    <div class="cart-total">
+                        <span>Total Production Cost:</span>
+                        <span>₹<span id="totalPrice">0</span></span>
+                    </div>
+                </div>
+
+                <div class="input-grid">
+
+                    <div class="input-group">
+                        <label>Client / Retailer Name</label>
+                        <input type="text" id="custName" required placeholder="Retail Shop A">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Contact Number</label>
+                        <input type="tel" id="custPhone" required placeholder="9876543210">
+                    </div>
+
+                    <div class="input-group full-width">
+                        <label>Delivery Destination / Warehouse</label>
+                        <input type="text" id="custAddress" required placeholder="Warehouse address">
+                    </div>
+
+                    <div class="input-group">
+                        <label>City</label>
+                        <input type="text" id="custCity" placeholder="City">
+                    </div>
+
+                    <div class="input-group">
+                        <label>ZIP / Postal Code</label>
+                        <input type="text" id="custZip" placeholder="ZIP Code">
+                    </div>
+
+                    <div class="input-group full-width">
+                        <label>Product Specifications / Notes</label>
+                        <textarea id="orderDesc" readonly></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Total Units (Pairs)</label>
+                        <input type="number" id="orderQty" value="100" min="1">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Production Priority</label>
+                        <select id="orderPriority">
+                            <option value="Low">Standard Production</option>
+                            <option value="Medium">High Priority</option>
+                            <option value="High">Urgent (Express)</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <button class="btn-submit" id="submitBtn">Confirm & Create Production Order</button>
+                <div id="statusMsg"></div>
+                
+                <div style="text-align:center;margin-top:20px;">
+                    <button onclick="backToProducts()" class="btn-secondary">Cancel and Re-select</button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TRACKING -->
+        <section id="trackSection" class="hidden">
+            <div class="glass-card">
+                <h2>Track Production Order</h2>
+                <input id="trackOrderId" placeholder="Enter Order ID (PO-XXX)">
+                <button id="trackBtn" class="btn-submit">Track Status</button>
+                <div id="trackResult" class="hidden" style="margin-top:20px;">
+                    <!-- Results injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SUCCESS -->
+        <section id="successView" class="hidden">
+            <div class="success-card">
+                <div class="check-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <h2>Production Order Created Successfully!</h2>
+                <p>The manufacturing tasks (Knitting, Dyeing, etc.) have been automatically queued.</p>
+                <div class="order-details-card" style="margin-top: 20px;">
+                    <div class="detail-row"><label>Order ID:</label> <strong id="orderIdDisplay" style="font-family: monospace; color: var(--primary);"></strong></div>
+                    <div class="detail-row"><label>Client Name:</label> <span id="confName"></span></div>
+                    <div class="detail-row"><label>Contact:</label> <span id="confPhone"></span></div>
+                    <div class="detail-row"><label>Destination:</label> <span id="confAddress"></span></div>
+                </div>
+                <div class="action-buttons" style="margin-top:30px;">
+                    <button onclick="window.location.reload()" class="btn-submit">New Production Order</button>
+                    <button onclick="copyOrderId()" class="btn-secondary">Copy ID</button>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 SocksFlow Workforce Analytics System</p>
+        </footer>
+
+    </main>
+
+    <script src="app.js"></script>
+
+    <!-- PRODUCT AUTO SELECT SCRIPT -->
+    <script>
+        // No changes needed to global helpers, they rely on app.js function availability
+    </script>
+
+</body>
+
+</html>body>
+
+</html>
